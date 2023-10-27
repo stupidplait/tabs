@@ -1,0 +1,323 @@
+@font-face {
+    font-family: 'Benzin';
+    src: url('../fonts/Benzin-Semibold.ttf');
+    font-weight: 600;
+}
+
+@keyframes jumpingLetter {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-40%);
+    }
+}
+
+@keyframes shakingLetter {
+    from {
+        rotate: 0;
+    }
+
+    to {
+        rotate: -5deg;
+    }
+}
+
+:root {
+    /* colors */
+
+    --clr-black: 28, 23, 28;
+    --clr-white: 237, 232, 236;
+    --clr-accent: 92, 119, 78;
+    --clr-primary: 103, 188, 115;
+    --clr-secondary: 224, 230, 228;
+    --clr-placeholder: 137, 130, 136;
+    --clr-blackBright: rgba(var(--clr-black), .05);
+    --clr-blackMedium: rgba(var(--clr-black), .3);
+    --clr-blackDark: rgba(var(--clr-black), .5);
+    --clr-blackSuperDark: rgba(var(--clr-black), .9);
+    --clr-whiteDark: rgba(var(--clr-white), .5);
+
+    /* spaces */
+
+    --space-small: 1rem;
+    --space-standard: 1.5rem;
+
+    /* letter-spacings */
+
+    --ls-text: .04em;
+    --ls-medium: .06em;
+    --ls-big: .08em;
+    --ls-huge: .1em;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Benzin';
+    height: 100vh;
+    background: rgb(var(--clr-bg));
+    font-size: 16px;
+    color: rgb(var(--clr-text));
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    max-width: 1180px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+
+.reviews {
+    margin-top: 3rem;
+}
+
+.reviews__inner {}
+
+.reviews__title {
+    text-align: right;
+    margin-bottom: 1em;
+}
+
+.reviews__wrapper {}
+
+.reviews__tabs {
+    display: inline-flex;
+    border: .0625rem solid var(--clr-blackBright);
+    border-radius: .25rem;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-width: 0;
+
+    @media (max-width: 940px) {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    @media (max-width: 540px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.reviews__tab {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--space-small) var(--space-standard);
+    border-right: .0625rem solid var(--clr-blackBright);
+    letter-spacing: var(--ls-text);
+    text-shadow: 0 0 .0625rem transparent;
+    cursor: pointer;
+    overflow: hidden;
+    transition: ease-in-out .3s;
+
+    &:last-child {
+        border-right: 0;
+    }
+
+    &:hover {
+        text-shadow: 0 0 .0625rem var(--clr-blackDark);
+    }
+
+    &.active {
+        border-right-color: transparent;
+        text-shadow: -0.0625rem 0 var(--clr-blackMedium), 0.0625rem 0 var(--clr-blackMedium), 0 -0.0625rem var(--clr-blackMedium), 0 .0625rem var(--clr-blackMedium);
+        background: var(--clr-blackBright);
+    }
+
+    @media (max-width: 940px) {
+        padding: var(--space-small);
+        flex: 1 1 auto;
+        text-align: center;
+
+        &>p {
+            text-wrap: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 20ch;
+        }
+    }
+
+    @media (max-width: 540px) {
+        padding: var(--space-small) .5rem;
+        flex: 1 1 50%;
+
+        &>p {
+            font-size: 0.875rem;
+        }
+
+        &:first-child,
+        &:nth-child(2) {
+            border-bottom: .0625rem solid var(--clr-blackBright);
+        }
+
+        &:nth-child(2n) {
+            border-right: 0;
+        }
+
+        &.active {
+            border-bottom-color: transparent;
+        }
+    }
+}
+
+.reviews__content {
+    padding: var(--space-standard);
+    display: flex;
+    overflow: hidden;
+    border-radius: .25rem;
+    border-top-left-radius: 0;
+    border: .0625rem solid var(--clr-blackBright);
+
+    @media (max-width: 940px) {
+        border-top-right-radius: 0;
+    }
+}
+
+.reviews__element {
+    opacity: 0;
+    flex: 0 0 100%;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    align-items: start;
+    gap: var(--space-standard);
+    overflow: hidden;
+    transition: opacity ease-out .6s, translate cubic-bezier(0.165, 0.84, 0.44, 1) .4s;
+
+    &.active {
+        opacity: 1;
+    }
+
+    @media (max-width: 1055px) {
+        grid-template-columns: 3fr 2fr;
+    }
+
+    @media (max-width: 940px) {
+        padding: var(--space-small);
+        grid-template-columns: 1fr;
+    }
+}
+
+.reviews__image {
+    aspect-ratio: 16 / 9;
+    border-radius: .25rem;
+    overflow: hidden;
+
+    &>img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.reviews__body {
+    overflow-y: auto;
+}
+
+.reviews__body::-webkit-scrollbar {
+    display: none;
+}
+
+.reviews__items {
+    transition: ease-in-out .3s;
+}
+
+.reviews__item {
+    position: relative;
+    margin-bottom: var(--space-standard);
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: auto 0 -0.75rem 0;
+        height: .0625rem;
+        background: var(--clr-blackBright);
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+
+        &::after {
+            display: none;
+        }
+    }
+}
+
+.reviews__top {
+    display: flex;
+    align-items: start;
+    gap: var(--space-standard);
+    margin-bottom: var(--space-small);
+}
+
+.reviews__person {
+    flex: 0 0 4rem;
+    aspect-ratio: 1;
+    border-radius: .25rem;
+    overflow: hidden;
+
+    &>img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.reviews__right {}
+
+.reviews__name {
+    font-size: 1.25rem;
+    font-weight: 500;
+    letter-spacing: var(--ls-medium);
+    margin-bottom: .25em;
+
+    @media (max-width: 1055px) {
+        font-size: 1rem;
+        margin-bottom: .5em;
+    }
+}
+
+.reviews__date {
+    font-size: 0.875rem;
+    font-weight: 300;
+    letter-spacing: var(--ls-text);
+    margin-bottom: .5em;
+
+    @media (max-width: 940px) {
+        font-size: .75rem;
+    }
+}
+
+.reviews__rating {}
+
+.reviews__text {
+    line-height: 156%;
+    letter-spacing: var(--ls-text);
+}
+
+a.github {
+    --clr-shadow: rgba(--clr-txt, .5);
+    font-family: 'Benzin';
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgb(var(--clr-txt));
+    text-shadow: 0 2px 15px var(--clr-shadow);
+    display: flex;
+    transition: ease-in-out;
+}
+
+a.github:hover {
+    --clr-shadow: rgba(--clr-primary, .5);
+    color: rgb(var(--clr-primary));
+}
